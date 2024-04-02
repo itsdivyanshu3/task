@@ -1,23 +1,29 @@
-import logo from './logo.svg';
+import React, { useState,useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [logoPosition, setLogoPosition] = useState({ x: 0, y: 0 });
+
+  const handleScreenClick = (event) => {
+    setLogoPosition({ x: event.clientX, y: event.clientY });
+  };
+
+ 
+  useEffect(() => {
+    document.addEventListener('click', handleScreenClick);
+
+    return () => {
+      document.removeEventListener('click', handleScreenClick);
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <img src="https://www.wizard.financial/static/media/wizaart-img.56787174.gif" alt="Logo" className="logo"
+        style={{
+          transform: `translate(${logoPosition.x}px, ${logoPosition.y}px)`,width:'120px'
+        }}
+      />
     </div>
   );
 }
